@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pluggie : Smart Plug for monitoring power consumption</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Pluggie</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/home">หน้าหลัก</a></li>
+      <li><a href="/userprofile">ข้อมูลผู้ใช้</a></li>
+      <li><a href="/deviceprofile">ข้อมูลอุปกรณ์</a></li>
+      <li><a href="/graph">กราฟแสดงผล</a></li>
+    </ul>
+    <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}  | <a href="/authen/">Log out</a><br>เวลาปัจจุบัน : {{date}}</p>
+  </div>
+</nav>
+
+<div class="container">
+  <h3>ยินดีต้องรับเข้าสู่ ปลั๊กจี้</h3>
+    <!--<p>This is Home Page na kub .</p>-->
+</div>
+
+<a href="/userprofile">
+    <img src="https://photos-5.dropbox.com/t/2/AADMTfyDsF2DGR4FV1qhTRyyLJh4BbBVbrGY8M9xuuKQlA/12/11259496/png/32x32/1/_/1/2/icon_user.png/EN35sQgYxwkgASgB/4kcugzlfAH4-2_I9Fc4fRKhxSkhGBYFV9kaW8Cq_HOE?size=1280x960&size_mode=3" alt="Icon User">
+</a>
+<a href="/deviceprofile">
+    <img src="https://photos-4.dropbox.com/t/2/AAB7VJU-WSmaLB6LlvEVhVpsHsIjikybDymujqFXAYHtqQ/12/11259496/png/32x32/1/_/1/2/icon_device.png/EN35sQgYxwkgASgB/ESc2IM0EDIQw1P9gfyzJoZNwqMtzuBEbmOSmjv1WAxk?size=1280x960&size_mode=3" alt="Icon User">
+</a>
+<a href="/graph">
+    <img src="https://photos-4.dropbox.com/t/2/AAC-iO3Ki2y_Bqx0q7cjW1uC-SBRrNb_M4n4WO9aJpeIrw/12/11259496/png/32x32/1/_/1/2/icon_Graph.png/EN35sQgYxwkgASgB/2m8p0_h9FDNPZ9Zw1z3J4MtVoUA_W0tqDRQ4wFVqfBY?size=1280x960&size_mode=3" alt="Icon User">
+</a>
+</body>
+</html>

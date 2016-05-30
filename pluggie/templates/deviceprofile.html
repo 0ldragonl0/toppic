@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pluggie : Device's Profile</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Pluggie</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="/home">หน้าหลัก</a></li>
+        <li><a href="/userprofile">ข้อมูลผู้ใช้</a></li>
+        <li class="active"><a href="/deviceprofile">ข้อมูลอุปกรณ์</a></li>
+        <li><a href="/graph">กราฟแสดงผล</a></li>
+      </ul>
+      <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}  | <a href="/authen/">Log out</a><br>เวลาปัจจุบัน : {{date}}</p>
+  </div>
+</nav>
+
+<div class="container">
+  <h3>ข้อมูลอุปกรณ์</h3>
+  <!--<p>This is Device Profile Page na kub .</p>-->
+  <ul class="list-inline">
+    <form method="post" action="{% url 'Device' %}">
+      <p class="text-right">
+      {% csrf_token %}
+      <button type="button" class="btn btn-default">
+      <a href="/adddevice/"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      เพิ่มข้อมูลอุปกรณ์</button></a> <button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+        แก้ไขข้อมูล</button> <button type="button" class="btn btn-default">
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        ลบข้อมูล (ใช้ไม่ได้)</button>
+        <input type="submit" name="editdevice" value="แก้ไข (ใช้ได้)">
+        <input type="submit" name="deletedevice" value="ลบ (ใช้ได้)">
+      </p>
+
+<div>
+  {% for device in devices %}
+    <pre><li><input type="radio" name="items" id="option{{device.id}}" value={{device.id}}><strong>รหัสประจำตัวอุปกรณ์ :</strong> {{device.id}}  <strong>เจ้าของ:</strong> {{device.owner}}
+      <strong>ชื่ออุปกรณ์:</strong> {{ device.device_name }}
+      <strong>ปริมาณการใช้:</strong> {{ device.usage }}
+      <strong>เวลาเปิด:</strong> {{device.openTime}}
+      <strong>เวลเปิด:</strong> {{device.closeTime}}
+    </li></pre>
+  {% endfor %}
+</div>
+    </form>
+  </ul>
+
+  </div>
+</body>
+</html>

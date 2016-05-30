@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pluggie : Smart Plug for monitoring power consumption</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Pluggie</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/home">หน้าหลัก</a></li>
+      <li><a href="/userprofile">ข้อมูลผู้ใช้</a></li>
+      <li><a href="/deviceprofile">ข้อมูลอุปกรณ์</a></li>
+      <li class="active"><a href="/graph">กราฟแสดงผล</a></li>
+    </ul>
+    <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}  | <a href="/authen/">Log out</a><br>เวลาปัจจุบัน : {{date}}</p>
+  </div>
+</nav>
+
+<div class="container">
+  <h3>โปรดเลือกชนิดกราฟแสดงผลการใช้ไฟฟ้า</h3>
+    <!--<p>This is Home Page na kub .</p>-->
+</div>
+
+<a href="/realtime_graph">
+    <img src="https://photos-3.dropbox.com/t/2/AAAOqOgqAY0p4ox45XwYWR4u_k3z7vXo_XE7EztmH3s4Gw/12/11259496/png/32x32/1/_/1/2/icon_Graph_real.png/EN35sQgYzgkgASgB/b4SVCEywZuOnCHrWDbYsyjcvXXqIoTnI70jgVtzLzag?size=1600x1200&size_mode=3" alt="Icon User">
+</a>
+<a href="/month_graph">
+    <img src="https://photos-6.dropbox.com/t/2/AAAH4ZRvoGb-RNjkIVJAkAiLIodm6ZX_bYdk7i46CB8lGQ/12/11259496/png/32x32/1/_/1/2/icon_Graph_month.png/EN35sQgYzQkgASgB/U7y48SATUcZeZPvZQohCGFHEoagLpaNLwiVMK2I5gkc?size=1600x1200&size_mode=3" alt="Icon User">
+</a>
+</body>
+</html>

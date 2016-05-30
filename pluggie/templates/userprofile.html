@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pluggie : User's Profile</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Pluggie</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="/home">หน้าหลัก</a></li>
+        <li class="active"><a href="/userprofile">ข้อมูลผู้ใช้</a></li>
+        <li><a href="/deviceprofile">ข้อมูลอุปกรณ์</a></li>
+        <li><a href="/graph">กราฟแสดงผล</a></li>
+      </ul>
+    <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}  | <a href="/authen/">Log out</a><br>เวลาปัจจุบัน : {{date}}</p>
+  </div>
+</nav>
+
+<div class="container">
+  <h3>ข้อมูลผู้ใช้</h3>
+    <!--<p>This is User Profile Page na kub .</p>-->
+</div>
+<div>
+  {% for user in users %}
+    <li> ชื่อที่ใช้ในระบบ : {{user.first_name}} {{user.last_name}}<br>
+      อีเมล์ : {{ user.email }}<br>
+      {%for profile in profiles %}
+      เวลามาตรฐาน : {{profile.user_timezone}}
+      {% endfor %}
+    </li>
+  {% endfor %}
+</div>
+</body>
+</html>

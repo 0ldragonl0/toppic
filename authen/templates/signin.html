@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Pluggie: Login</title>
+</head>
+<body>
+  <center>
+    <img src="https://photos-3.dropbox.com/t/2/AAD9Q2ETLhOuIpoAxAllFAc0Fsk2JpXTuRR_XusjestpIw/12/11259496/png/32x32/1/_/1/2/icon_pluggie.png/EN35sQgYywkgASgB/2Jqo5bs2ThaJNDiQJMAeAOMf5ZPmrQc1Aba8X1ZLUoE?size=1280x960&size_mode=3" alt="Icon User">
+  <br>
+{{msg}}
+<form method="post" action="{% url 'signin' %}">
+{% csrf_token %}
+   ชื่อผู้ใช้ :
+    <input type="text" name="username">
+    <br>
+    รหัสผ่าน :
+    <input type="password" name="password">
+    <br>
+    <input type="submit" name="register" value="สมัครสมาชิก">
+  	<input type="submit" name="login" value="เข้าสู่ระบบ">
+</form>
+</center>
+</body>
+</html>

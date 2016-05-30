@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pluggie : Device's Profile</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  {% load staticfiles %}
+  <script src="{% static 'angular.min.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Pluggie</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="/home">หน้าหลัก</a></li>
+        <li><a href="/userprofile">ข้อมูลผู้ใช้</a></li>
+        <li class="active"><a href="/deviceprofile">ข้อมูลอุปกรณ์</a></li>
+        <li><a href="/graph">กราฟแสดงผล</a></li>
+      </ul>
+      <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}  | <a href="/authen/">Log out</a><br>เวลาปัจจุบัน : {{date}}</p>
+  </div>
+</nav>
+
+<div class="container">
+  <h3>แก้ไขข้อมูลอุปกรณ์</h3>
+  <!--<p>This is Device Profile Page na kub .</p>-->
+  <form aciton="." name="deviceprofile" method="post" >
+    {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="cancelupdatedevice" value="ยกเลิก">
+        <input type="submit" name="updatedevice" value="บันทึกข้อมูล">
+    </form>
+</div>
+
+</body>
+</html>
