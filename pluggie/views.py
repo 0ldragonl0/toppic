@@ -33,15 +33,39 @@ def adddevice(request):
         if form.is_valid():
             new_deviceprofile = DeviceProfile.objects.create(**form.cleaned_data)
             new_deviceprofile.save()
-            return  render(request, 'deviceprofile.html',{"date":str(now)})
+            return redirect('/deviceprofile/')
     elif request.POST.get('canceladddevice'):
-        return render(request, 'deviceprofile.html',{'devices': DeviceProfile.objects.filter(owner=request.user),"date":str(now)})
+        return redirect('/deviceprofile/')
     else:
         form = DeviceProfileForm(initial={'owner':request.user})
         form.fields['owner'].widget.attrs['readonly'] = 'True'
     return render(request, 'deviceprofile_add.html', {'form': form,"date":str(now)})
 
+def editdevice(request,id):
+    now = datetime.datetime.now()
+    now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
+    data = DeviceProfile.objects.get(pk=id)
+    if request.POST.get('updatedevice'):
+        #request.POST.owner = request.user
+        form = DeviceProfileForm(request.POST)
+        if form.is_valid():
+            DeviceProfile.objects.filter(pk=id).update(**form.cleaned_data)
+            return redirect('/deviceprofile/')
+    elif request.POST.get('cancelupdatedevice'):
+            return redirect('/deviceprofile/')
+    else:
+        form = DeviceProfileForm(initial={'owner':request.user})
+        dv = {'owner':data.owner,'device_name':data.device_name,'usage':data.usage,'openTime':data.openTime,'closeTime':data.closeTime}
+        form = DeviceProfileForm(dv)
+        form.fields['owner'].widget.attrs['readonly'] = 'True'
+    return render(request, 'deviceprofile_edit.html', {'form': form,"date":str(now)})
 
+def deletedevice(request,id):
+    now = datetime.datetime.now()
+    now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
+
+    DeviceProfile.objects.filter(id__in=id).delete()
+    return redirect('/deviceprofile/',{"date":str(now)})
 #request.session['user_username']
 def devicedetail(request):
     #print(request.user)
@@ -64,24 +88,6 @@ def UserProfilePage(request):
 def Device(request):
     now = datetime.datetime.now()
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
-    if request.POST.get('deletedevice'):
-         #print request.POST.getlist('items')
-         #print  DeviceProfile.objects.filter(id__in=request.POST.getlist('items'))
-         DeviceProfile.objects.filter(id__in=request.POST.getlist('items')).delete()
-    elif request.POST.get('editdevice'):
-            #data = DeviceProfile.objects.filter(id__in=request.POST.getlist('items'))
-            #data.update(usage=345)
-            data = DeviceProfile.objects.get(pk=request.POST.get('items'))
-            #print data
-            form = DeviceProfileForm(initial={'owner':request.user})
-            dv = {'owner':data.owner,'device_name':data.device_name,'usage':data.usage,'openTime':data.openTime,'closeTime':data.closeTime}
-            form = DeviceProfileForm(dv)
-            form.fields['owner'].widget.attrs['readonly'] = 'True'
-            form.fields['owner'].widget.attrs['disabled'] = 'True'
-            return render(request, 'deviceprofile_edit.html', {'form': form,"date":str(now)})
-    elif request.POST.get('updatedevice'):
-        print "Yoooooooooo----------!!!!!"
-        print dv
     return render(request, 'deviceprofile.html',{'devices': DeviceProfile.objects.filter(owner=request.user),"date":str(now)})
         #return render(request, 'deviceprofile_edit.html', {'form': form,"date":str(now)})
 
