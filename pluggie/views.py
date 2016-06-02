@@ -7,7 +7,7 @@ from django.utils import timezone
 import pytz
 from django.utils import formats
 from django.template import RequestContext
-from forms import DeviceProfileForm
+from forms import DeviceProfileForm , EditProfileForm
 #import for graph
 from django.shortcuts import render
 from bokeh.plotting import figure
@@ -33,15 +33,38 @@ def adddevice(request):
         if form.is_valid():
             new_deviceprofile = DeviceProfile.objects.create(**form.cleaned_data)
             new_deviceprofile.save()
-            return  render(request, 'deviceprofile.html',{"date":str(now)})
+            return redirect('/deviceprofile/')
     elif request.POST.get('canceladddevice'):
-        return render(request, 'deviceprofile.html',{'devices': DeviceProfile.objects.filter(owner=request.user),"date":str(now)})
+        return redirect('/deviceprofile/')
     else:
         form = DeviceProfileForm(initial={'owner':request.user})
         form.fields['owner'].widget.attrs['readonly'] = 'True'
     return render(request, 'deviceprofile_add.html', {'form': form,"date":str(now)})
 
+def editdevice(request,id):
+    now = datetime.datetime.now()
+    now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
+    data = DeviceProfile.objects.get(pk=id)
+    if request.POST.get('updatedevice'):
+        #request.POST.owner = request.user
+        form = DeviceProfileForm(request.POST)
+        if form.is_valid():
+            DeviceProfile.objects.filter(pk=id).update(**form.cleaned_data)
+            return redirect('/deviceprofile/')
+    elif request.POST.get('cancelupdatedevice'):
+            return redirect('/deviceprofile/')
+    else:
+        form = DeviceProfileForm(initial={'owner':request.user})
+        dv = {'owner':data.owner,'device_name':data.device_name,'usage':data.usage,'openTime':data.openTime,'closeTime':data.closeTime}
+        form = DeviceProfileForm(dv)
+        form.fields['owner'].widget.attrs['readonly'] = 'True'
+    return render(request, 'deviceprofile_edit.html', {'form': form,"date":str(now)})
 
+def deletedevice(request,id):
+    now = datetime.datetime.now()
+    now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
+    DeviceProfile.objects.filter(id=id).delete()
+    return redirect('/deviceprofile/',{"date":str(now)})
 #request.session['user_username']
 def devicedetail(request):
     #print(request.user)
@@ -61,27 +84,33 @@ def UserProfilePage(request):
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
     return render(request, 'userprofile.html',{'users':User.objects.filter(username =request.user),'profiles':UserProfile.objects.filter(user = request.user),"date":str(now)})
 
+def edit_profile(request,id):
+    now = datetime.datetime.now()
+    now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
+    data = User.objects.get(pk=id)
+    if request.POST.get('updateuser'):
+        user = request.user
+        time = request.POST['timezone']
+        form = EditProfileForm(request.POST)
+        time_user = UserProfile.objects.filter(pk=id).update(user_timezone=time)
+        request.session['django_timezone'] = request.POST['timezone']
+        if form.is_valid():
+            user.first_name = request.POST['first_name']
+            user.last_name = request.POST['last_name']
+            user.save()
+
+            return redirect('/userprofile/')
+    elif request.POST.get('canceledituser'):
+            return redirect('/userprofile/')
+    else:
+        form = EditProfileForm()
+        dv = {'first_name':data.first_name,'last_name':data.last_name,'email':data.email}
+        form = EditProfileForm(dv)
+    return render(request, 'userprofile_edit.html', {'form':form,'timezones':pytz.common_timezones,"date":str(now)})
+
 def Device(request):
     now = datetime.datetime.now()
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
-    if request.POST.get('deletedevice'):
-         #print request.POST.getlist('items')
-         #print  DeviceProfile.objects.filter(id__in=request.POST.getlist('items'))
-         DeviceProfile.objects.filter(id__in=request.POST.getlist('items')).delete()
-    elif request.POST.get('editdevice'):
-            #data = DeviceProfile.objects.filter(id__in=request.POST.getlist('items'))
-            #data.update(usage=345)
-            data = DeviceProfile.objects.get(pk=request.POST.get('items'))
-            #print data
-            form = DeviceProfileForm(initial={'owner':request.user})
-            dv = {'owner':data.owner,'device_name':data.device_name,'usage':data.usage,'openTime':data.openTime,'closeTime':data.closeTime}
-            form = DeviceProfileForm(dv)
-            form.fields['owner'].widget.attrs['readonly'] = 'True'
-            form.fields['owner'].widget.attrs['disabled'] = 'True'
-            return render(request, 'deviceprofile_edit.html', {'form': form,"date":str(now)})
-    elif request.POST.get('updatedevice'):
-        print "Yoooooooooo----------!!!!!"
-        print dv
     return render(request, 'deviceprofile.html',{'devices': DeviceProfile.objects.filter(owner=request.user),"date":str(now)})
         #return render(request, 'deviceprofile_edit.html', {'form': form,"date":str(now)})
 
@@ -91,9 +120,22 @@ def ChooseGraph(request):
     return render(request,'choosegraph.html',{"date":str(now)})
 
 def MonthGraph(request):
-    plot = figure()
-    plot.circle([1,2], [3,4],[7,8])
+    return render(request, "simple_chart.html")
 
-    script, div = components(plot)
-
-    return render(request, "simple_chart.html", {"the_script": script, "the_div": div})
+def usage_data(request):
+    myfile1={
+    "usage": [
+        {
+            "id" : 1,
+            "device_id": 0,
+            "usage" : 93.24,
+            "datetime": 24-Apr-07
+        },
+        {
+            "id" : 1,
+            "device_id": 0,
+            "usage" : 95.35,
+            "datetime": 25-Apr-07
+        },
+        ]
+    }

@@ -21,8 +21,9 @@
       <li><a href="/deviceprofile">ข้อมูลอุปกรณ์</a></li>
       <li class="active"><a href="/graph">กราฟแสดงผล</a></li>
     </ul>
-    <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}  | <a href="/authen/">Log out</a><br>เวลาปัจจุบัน : {{date}}</p>
-  </div>
+    <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}
+      <button type="button" class="btn btn-default"><a href="/authen/" style="color: #000000">ออกจากระบบ</a></button>
+      <br>เวลาปัจจุบัน : {{date}}</p>  </div>
 </nav>
 
 <div class="container">

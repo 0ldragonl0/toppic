@@ -2,24 +2,35 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>Pluggie: Login</title>
+    <title>Pluggie | Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 </head>
 <body>
   <center>
     <img src="https://photos-3.dropbox.com/t/2/AAD9Q2ETLhOuIpoAxAllFAc0Fsk2JpXTuRR_XusjestpIw/12/11259496/png/32x32/1/_/1/2/icon_pluggie.png/EN35sQgYywkgASgB/2Jqo5bs2ThaJNDiQJMAeAOMf5ZPmrQc1Aba8X1ZLUoE?size=1280x960&size_mode=3" alt="Icon User">
-  <br>
+  <br><br>
+  <div class="well center block" style="max-width:400px">
 {{msg}}
 <form method="post" action="{% url 'signin' %}">
 {% csrf_token %}
-   ชื่อผู้ใช้ :
-    <input type="text" name="username">
+   <b>ชื่อผู้ใช้</b> :
+    <input type="text" class="form-control"  name="username">
     <br>
-    รหัสผ่าน :
-    <input type="password" name="password">
-    <br>
-    <input type="submit" name="register" value="สมัครสมาชิก">
-  	<input type="submit" name="login" value="เข้าสู่ระบบ">
-</form>
+    <b>รหัสผ่าน</b> :
+    <input type="password" class="form-control" name="password">
+    <br><br>
+  	<input type="submit" class="btn btn-primary" name="login" value="เข้าสู่ระบบ">
+    <br> - หรือ - <br>
+    <input type="submit" class="btn btn-default" name="register" value="สมัครสมาชิก">
+
+
+    </div>
+  </form>
+</div>
 </center>
 </body>
 </html>

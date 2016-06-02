@@ -1,3 +1,4 @@
+# -- coding: utf-8 --
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -14,6 +15,7 @@ from pluggie.models import DeviceProfile , UserProfile
 
 # Create your views here.
 def signin(request):
+    msg = "โปรดเข้าสู่ระบบ."
     if request.POST.get('login') and 'username' in request.POST:
         username = request.POST['username']
         password = request.POST['password']
@@ -29,7 +31,7 @@ def signin(request):
             else:
                 msg="Disabled account"
         else:
-            msg="Invalid login"
+            msg="โปรดตรวจสอบ ชื่อผู้ใช้ หรือ รหัสผ่าน."
         return render(request,'signin.html',{'msg': msg})
     elif request.POST.get('register'):
         form = UserForm()
@@ -44,12 +46,12 @@ def signin(request):
             user_pro = UserProfile.objects.create(user = new_user)
             user_pro.save()
             # redirect, or however you want to get to the main view
-            msg ="Registered."
+            msg ="สมัครสมาชิกเรียบร้อยแล้ว."
             return  render(request, 'signin.html',{'msg': msg})
     elif request.POST.get('cancel'):
-        msg = "Please sign-in."
+        msg = "โปรดเข้าสู่ระบบ."
         return  render(request, 'signin.html',{'msg': msg})
-    return render(request,'signin.html',{'msg': "Please sign-in"})
+    return render(request,'signin.html',{'msg': msg})
 
 
 def signout(request):

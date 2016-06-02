@@ -21,19 +21,30 @@
 </nav>
 
   <div class="container">
-    <h3>สมัครสมาชิกระบบ</h3>
+    <h3>แก้ไขข้อมูลผู้ใช้</h3>
       <!--<p>This is Home Page na kub .</p>-->
       <br>
       <div class="well center block" style="max-width:400px">
+
       {% block content %}
-      <form method="post" action="">
+      <form method="POST" action="." name="userprofile" >
           {% csrf_token %}
-          {{ form }}
-          <br>
-          <input type="submit" class="btn btn-default" name="cancel" value="ยกเลิก" />
-          <input type="submit" class="btn btn-primary" name="save" value="ยืนยัน" />
+          {{ form.as_p }}
+          {% load tz %}
+          {% get_current_timezone as TIME_ZONE %}
+              {% csrf_token %}
+              <label for="timezone">Time zone:</label>
+              <select name="timezone">
+                  {% for tz in timezones %}
+                  <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected="selected"{% endif %}>{{ tz }}</option>
+                  {% endfor %}
+              </select>
+
+          <input type="submit" class="btn btn-default" name="canceledituser" value="ยกเลิก" />
+          <input type="submit" class="btn btn-primary" name="updateuser" value="บันทึกข้อมูล" />
       </form>
       {% endblock %}
+
   </div>
 </div>
 </body>

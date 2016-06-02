@@ -21,8 +21,9 @@
         <li class="active"><a href="/deviceprofile">ข้อมูลอุปกรณ์</a></li>
         <li><a href="/graph">กราฟแสดงผล</a></li>
       </ul>
-      <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}  | <a href="/authen/">Log out</a><br>เวลาปัจจุบัน : {{date}}</p>
-  </div>
+      <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}
+        <button type="button" class="btn btn-default"><a href="/authen/" style="color: #000000">ออกจากระบบ</a></button>
+        <br>เวลาปัจจุบัน : {{date}}</p>  </div>
 </nav>
 
 <div class="container">
@@ -33,23 +34,18 @@
       <p class="text-right">
       {% csrf_token %}
       <button type="button" class="btn btn-default">
-      <a href="/adddevice/"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-      เพิ่มข้อมูลอุปกรณ์</button></a> <button type="button" class="btn btn-default">
-        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-        แก้ไขข้อมูล</button> <button type="button" class="btn btn-default">
-          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-        ลบข้อมูล (ใช้ไม่ได้)</button>
-        <input type="submit" name="editdevice" value="แก้ไข (ใช้ได้)">
-        <input type="submit" name="deletedevice" value="ลบ (ใช้ได้)">
+      <a href="/adddevice/" style="color: #000000"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      เพิ่มข้อมูลอุปกรณ์</a></button>
       </p>
-
 <div>
   {% for device in devices %}
-    <pre><li><input type="radio" name="items" id="option{{device.id}}" value={{device.id}}><strong>รหัสประจำตัวอุปกรณ์ :</strong> {{device.id}}  <strong>เจ้าของ:</strong> {{device.owner}}
+    <pre><li><strong>รหัสประจำตัวอุปกรณ์ :</strong> {{device.id}}  <!--<strong>เจ้าของ:</strong> {{device.owner}}-->
       <strong>ชื่ออุปกรณ์:</strong> {{ device.device_name }}
       <strong>ปริมาณการใช้:</strong> {{ device.usage }}
       <strong>เวลาเปิด:</strong> {{device.openTime}}
       <strong>เวลเปิด:</strong> {{device.closeTime}}
+
+      <button type="button" class="btn btn-default"><a href="/editdevice/{{device.id}}" style="color: #000000"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> แก้ไขข้อมูล</a></button><button type="button" class="btn btn-default"><a href="/deletedevice/{{device.id}}" style="color: #000000"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> ลบข้อมูล</a></button>
     </li></pre>
   {% endfor %}
 </div>

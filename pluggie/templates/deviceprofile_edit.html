@@ -23,20 +23,23 @@
         <li class="active"><a href="/deviceprofile">ข้อมูลอุปกรณ์</a></li>
         <li><a href="/graph">กราฟแสดงผล</a></li>
       </ul>
-      <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}  | <a href="/authen/">Log out</a><br>เวลาปัจจุบัน : {{date}}</p>
-  </div>
+      <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}
+        <button type="button" class="btn btn-default"><a href="/authen/" style="color: #000000">ออกจากระบบ</a></button>
+        <br>เวลาปัจจุบัน : {{date}}</p>  </div>
 </nav>
 
 <div class="container">
   <h3>แก้ไขข้อมูลอุปกรณ์</h3>
   <!--<p>This is Device Profile Page na kub .</p>-->
+  <br>
+  <div class="well center block" style="max-width:400px">
   <form aciton="." name="deviceprofile" method="post" >
     {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" name="cancelupdatedevice" value="ยกเลิก">
-        <input type="submit" name="updatedevice" value="บันทึกข้อมูล">
+        <input type="submit" class="btn btn-default" name="cancelupdatedevice" value="ยกเลิก" />
+        <input type="submit" class="btn btn-primary" name="updatedevice" value="บันทึกข้อมูล" />
     </form>
 </div>
-
+</div>
 </body>
 </html>

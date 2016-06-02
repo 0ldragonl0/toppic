@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 
@@ -21,7 +22,9 @@
       <li><a href="/deviceprofile">ข้อมูลอุปกรณ์</a></li>
       <li><a href="/graph">กราฟแสดงผล</a></li>
     </ul>
-    <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}  | <a href="/authen/">Log out</a><br>เวลาปัจจุบัน : {{date}}</p>
+    <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}
+      <button type="button" class="btn btn-default"><a href="/authen/" style="color: #000000">ออกจากระบบ</a></button>
+      <br>เวลาปัจจุบัน : {{date}}</p>
   </div>
 </nav>
 
