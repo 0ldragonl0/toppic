@@ -12,13 +12,21 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Pluggie</a>
-    </div>
-    </div>
-</nav>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Pluggie</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="/home">หน้าหลัก</a></li>
+        <li class="active"><a href="/userprofile">ข้อมูลผู้ใช้</a></li>
+        <li><a href="/deviceprofile">ข้อมูลอุปกรณ์</a></li>
+        <li><a href="/graph">กราฟแสดงผล</a></li>
+      </ul>
+      <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}
+        <button type="button" class="btn btn-default btn-xs"><a href="/authen/" style="color: #000000">ออกจากระบบ</a></button>
+        <br>เวลาปัจจุบัน : {{date}}</p>  </div>
+  </nav>
 
   <div class="container">
     <h3>แก้ไขข้อมูลผู้ใช้</h3>
