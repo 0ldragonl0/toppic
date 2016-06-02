@@ -59,11 +59,20 @@ def editdevice(request,id):
         form = DeviceProfileForm(dv)
         form.fields['owner'].widget.attrs['readonly'] = 'True'
     return render(request, 'deviceprofile_edit.html', {'form': form,"date":str(now)})
+<<<<<<< HEAD
 
 def deletedevice(request,id):
     now = datetime.datetime.now()
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
     DeviceProfile.objects.filter(id=id).delete()
+=======
+
+def deletedevice(request,id):
+    now = datetime.datetime.now()
+    now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
+
+    DeviceProfile.objects.filter(id__in=id).delete()
+>>>>>>> origin/master
     return redirect('/deviceprofile/',{"date":str(now)})
 #request.session['user_username']
 def devicedetail(request):
