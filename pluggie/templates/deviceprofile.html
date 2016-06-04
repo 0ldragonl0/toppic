@@ -40,9 +40,9 @@
 <div class="well center block" style="min-width:400px">
   {% for device in devices %}
     <pre><li>
-      <strong>รหัสประจำตัวอุปกรณ์ :</strong> {{device.id}}  <!--<strong>เจ้าของ:</strong> {{device.owner}}-->
+      <strong>รหัสประจำตัวอุปกรณ์:</strong> {{device.id}}  <!--<strong>เจ้าของ:</strong> {{device.owner}}-->
       <strong>ชื่ออุปกรณ์:</strong> {{ device.device_name }}
-      <strong>ปริมาณการใช้:</strong> {{ device.usage }}
+      <strong>ปริมาณไฟฟ้าที่ใช้ทั้งหมด:</strong> {{device.total_usage}}
       <strong>เวลาเปิด:</strong> {{device.openTime}}
       <strong>เวลเปิด:</strong> {{device.closeTime}}
 

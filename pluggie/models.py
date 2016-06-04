@@ -19,9 +19,16 @@ class UserProfile(models.Model):
 class DeviceProfile(models.Model):
     owner = models.CharField(max_length=30)
     device_name = models.CharField(max_length=30)
-    usage = models.FloatField()
+    total_usage = models.FloatField(max_length=20,default='0')
     openTime = models.TimeField('time to open device')
     #openTime = models.DateTimeField('time to open device',auto_now_add=True) <- timestamp
     closeTime = models.TimeField('time to close device')
     def __str__(self):
         return self.device_name
+
+class DeviceUsage(models.Model):
+    device_id = models.BigIntegerField(max_length=10)
+    usage = models.FloatField(max_length=20)
+    date_time = models.DateTimeField()
+    def __str__(self):
+        return str(self.device_id)

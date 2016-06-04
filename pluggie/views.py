@@ -1,7 +1,7 @@
 from django.http import HttpResponse , JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
-from .models import DeviceProfile , UserProfile
+from .models import DeviceProfile , UserProfile,DeviceUsage
 import datetime
 from django.utils import timezone
 import pytz
@@ -13,6 +13,7 @@ from django.shortcuts import render
 from bokeh.plotting import figure
 from bokeh.resources import CDN
 from bokeh.embed import components
+from django.db.models import Sum
 
 def home(request):
     now = datetime.datetime.now()
@@ -55,7 +56,7 @@ def editdevice(request,id):
             return redirect('/deviceprofile/')
     else:
         form = DeviceProfileForm(initial={'owner':request.user})
-        dv = {'owner':data.owner,'device_name':data.device_name,'usage':data.usage,'openTime':data.openTime,'closeTime':data.closeTime}
+        dv = {'owner':data.owner,'device_name':data.device_name,'openTime':data.openTime,'closeTime':data.closeTime}
         form = DeviceProfileForm(dv)
         form.fields['owner'].widget.attrs['readonly'] = 'True'
     return render(request, 'deviceprofile_edit.html', {'form': form,"date":str(now)})
@@ -73,16 +74,16 @@ def deletedevice(request,id):
 def devicedetail(request):
     #print(request.user)
     #print(DeviceProfile.objects.filter(owner=request.user).count())
-    dv = {i.device_name: {'usage':i.usage,'open time': i.openTime,'close time': i.closeTime,}
+    dv = {i.device_name: {'total_usage':i.total_usage,'open time': i.openTime,'close time': i.closeTime,}
     for i in DeviceProfile.objects.filter(owner=request.user)}
     return JsonResponse(dv,safe=False)
-
-def set_timezone(request):
-    if request.method == 'POST':
-        request.session['django_timezone'] = request.POST['timezone']
-        return redirect('/')
-    else:
-        return render(request, 'template.html', {'timezones': pytz.common_timezones})
+#
+# def set_timezone(request):
+#     if request.method == 'POST':
+#         request.session['django_timezone'] = request.POST['timezone']
+#         return redirect('/')
+#     else:
+#         return render(request, 'template.html', {'timezones': pytz.common_timezones})
 
 def UserProfilePage(request):
     now = datetime.datetime.now()
@@ -116,8 +117,20 @@ def edit_profile(request,id):
 def Device(request):
     now = datetime.datetime.now()
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
+    #dv = {i.devices_id: DeviceUsage.objects.filter(devices_id=i.id)}for i in DeviceProfile.objects.filter(owner=request.user)
+    device =  DeviceProfile.objects.filter(owner=request.user)
+    #print device
+    for d in device:
+        du = DeviceUsage.objects.filter(device_id=d.id).aggregate(Sum('usage'))
+        #print du['usage__sum']
+        total = du['usage__sum']
+        if total is None:
+            DeviceProfile.objects.filter(id=d.id).update(total_usage=0.0)
+        else:
+            DeviceProfile.objects.filter(id=d.id).update(total_usage=total)
     return render(request, 'deviceprofile.html',{'devices': DeviceProfile.objects.filter(owner=request.user),"date":str(now)})
         #return render(request, 'deviceprofile_edit.html', {'form': form,"date":str(now)})
+
 
 def ChooseGraph(request):
     now = datetime.datetime.now()
@@ -126,6 +139,12 @@ def ChooseGraph(request):
 
 def MonthGraph(request):
     return render(request, "simple_chart.html")
+
+def updateusage(request,id,num):
+    use = DeviceProfile.objects.get(pk=id).usage + int(num.encode('ascii'))
+    DeviceProfile.objects.filter(pk=id).update(usage=use)
+
+    return redirect('/deviceprofile/')
 
 def usage_data(request):
     myfile1={
