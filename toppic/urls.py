@@ -20,5 +20,5 @@ urlpatterns = [
     #url(r'^updateusage/$', views.updateusage,name='updateusage'),
     url(r'^updateusage/(?P<id>[0-9]+)/(?P<num>\d+\.\d{2})/$', views.updateusage,name='updateusage'),
     url(r'^setonoff/(?P<id>[0-9]+)/(?P<num>[0-9]+)/$', views.setonoff,name='setonoff'),
-
+    url(r'^realtimeData.tsv/$',views.realtimeData,name='realtimeData'),
 ]

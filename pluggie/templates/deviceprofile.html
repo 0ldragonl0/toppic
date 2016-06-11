@@ -41,6 +41,8 @@
 <div class="well center block" style="min-width:400px">
   {% for device in devices %}
     <pre><li>
+      <button type="button" class="btn btn-default"><a href="/setonoff/{{device.device_id}}/1" style="color: #000000"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> เปิดอุปกรณ์</a></button>      <button type="button" class="btn btn-default"><a href="/setonoff/{{device.device_id}}/0" style="color: #000000"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> ปิดอุปกรณ์</a></button>
+      <strong>สถานะการทำงาน:</strong> {{device.status_manual}}
       <strong>รหัสประจำตัวอุปกรณ์:</strong> {{device.device_id}}  <!--<strong>เจ้าของ:</strong> {{device.owner}}-->
       <strong>ชื่ออุปกรณ์:</strong> {{ device.device_name }}
       <strong>ปริมาณไฟฟ้าที่ใช้ทั้งหมด:</strong> {{device.total_usage}} Unit

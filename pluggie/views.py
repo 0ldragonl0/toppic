@@ -3,7 +3,8 @@ from django.http import HttpResponse , JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from .models import DeviceProfile , UserProfile,DeviceUsage
-import datetime
+
+from datetime import datetime, timedelta
 from django.utils import timezone
 import pytz
 from django.utils import formats
@@ -20,7 +21,7 @@ from bokeh.charts import Bar , color, marker
 
 
 def home(request):
-    now = datetime.datetime.now()
+    now = datetime.now()
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
     #html = "<html><body>It is now %s.</body></html>" % now
     #return HttpResponse(request.session['django_timezone'])
@@ -31,7 +32,7 @@ def output(request):
    return HttpResponse(x)
 
 def adddevice(request):
-    now = datetime.datetime.now()
+    now = datetime.now()
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
     if request.POST.get('adddevice'):
         form = DeviceProfileForm(request.POST)
@@ -47,7 +48,7 @@ def adddevice(request):
     return render(request, 'deviceprofile_add.html', {'form': form,"date":str(now)})
 
 def editdevice(request,id):
-    now = datetime.datetime.now()
+    now = datetime.now()
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
     data = DeviceProfile.objects.get(device_id=id)
 
@@ -65,7 +66,7 @@ def editdevice(request,id):
     return render(request, 'deviceprofile_edit.html', {'form': form,"date":str(now)})
 
 def deletedevice(request,id):
-    now = datetime.datetime.now()
+    now = datetime.now()
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
 
     DeviceProfile.objects.filter(device_id=id).delete()
@@ -84,12 +85,12 @@ def devicedetail(request):
     return redirect('/')
 
 def UserProfilePage(request):
-    now = datetime.datetime.now()
+    now = datetime.now()
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
     return render(request, 'userprofile.html',{'users':User.objects.filter(username =request.user),'profiles':UserProfile.objects.filter(user = request.user),"date":str(now)})
 
 def edit_profile(request,id):
-    now =  timezone.make_aware(datetime.datetime.now(),timezone.get_default_timezone())
+    now =  timezone.make_aware(datetime.now(),timezone.get_default_timezone())
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
     data = User.objects.get(pk=id)
     if request.POST.get('updateuser'):
@@ -113,7 +114,7 @@ def edit_profile(request,id):
     return render(request, 'userprofile_edit.html', {'form':form,'timezones':pytz.common_timezones,"date":str(now)})
 
 def Device(request):
-    now = datetime.datetime.now()
+    now = datetime.now()
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
     #dv = {i.devices_id: DeviceUsage.objects.filter(devices_id=i.id)}for i in DeviceProfile.objects.filter(owner=request.user)
     user_now = User.objects.get(username=request.user)
@@ -144,35 +145,26 @@ def Device(request):
 
 
 def ChooseGraph(request):
-    now = datetime.datetime.now()
+    now = datetime.now()
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
     return render(request,'choosegraph.html',{"date":str(now)})
 
 def RealtimeGraph(request):
-    now = datetime.datetime.now()
+    now = datetime.now()
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
 
-    x = [1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15
-    ,16,17,18,19,20,21,22,23,24,25,26,27,28,29
-    ,30,31]
-    y = [1, 2, 3, 5, 3,8, 5, 3,8, 5, 3,8,8,1,
-    2, 3, 5, 3,8, 5, 3,8, 5, 1, 2, 3, 5,
-    3,8, 5, 3,8, 5, 3,8,8,3,8,8]
+    if request.POST.get('deviceid') is not None:
+        id = request.POST.get('deviceid')
+    else :
+        print "Don't select device"
 
-    plot = figure(plot_width=400, plot_height=400)
-
-    # add both a line and circles on the same plot
-    plot.line(x, y, line_width=2)
-
-    script, div = components(plot, CDN)
-
-    return render(request, "simple_chart2.html", {"the_script": script, "the_div": div,'devices': DeviceProfile.objects.filter(owner=request.user),"date":str(now)})
+    return render(request, "realtime_graph2.html", {'devices': DeviceProfile.objects.filter(owner=request.user),"date":str(now)})
 
 
 
 def MonthGraph(request):
 
-    now = datetime.datetime.now()
+    now = datetime.now()
     now = formats.date_format(now,"SHORT_DATETIME_FORMAT")
 
     #data = DeviceUsage.objects.values('date').annotate(sumusage=Sum('usage'))# Group by date
@@ -206,8 +198,8 @@ def MonthGraph(request):
 
 def updateusage(request,id,num):
     #use = DeviceProfile.objects.get(pk=id).usage + int(num.encode('ascii'))
-    now =  timezone.make_aware(datetime.datetime.now(),timezone.get_default_timezone())
-    print now
+    now =  timezone.make_aware(datetime.now(),timezone.get_default_timezone())
+    #print now
     usage_num = float(num)
 
     data = DeviceProfile.objects.get(device_id=id)
@@ -229,7 +221,7 @@ def updateusage(request,id,num):
     return HttpResponse(msg)
 
 def setonoff(request,id,num):
-    now =  timezone.make_aware(datetime.datetime.now(),timezone.get_default_timezone())
+    now =  timezone.make_aware(datetime.now(),timezone.get_default_timezone())
     #print now
     data = DeviceProfile.objects.filter(device_id=id)
     num = int(num)
@@ -242,7 +234,7 @@ def setonoff(request,id,num):
 
 
     # data = DeviceProfile.objects.get(device_id=id)
-    # now =  timezone.make_aware(datetime.datetime.now(),timezone.get_default_timezone())
+    # now =  timezone.make_aware(datetime.now(),timezone.get_default_timezone())
     #
     # if data.openTime >= now <= data.closeTime:
     #     msg = '1'
@@ -251,3 +243,18 @@ def setonoff(request,id,num):
     #     msg = '0'
     #     DeviceProfile.objects.get(device_id=id).update(status=0)
     return HttpResponse(msg)
+
+def realtimeData(request):
+    now =  timezone.make_aware(datetime.now(),timezone.get_default_timezone())
+
+    time_threshold = now - timedelta(minutes=2)
+    #print time_threshold
+    results = DeviceUsage.objects.filter(device_id=4,date__range=(time_threshold,now))
+    #print results
+    #data = DeviceUsage.objects.filter(device_id=4,date=).values('date').annotate(sumusage=Sum('usage'))
+    data = results.values('date').annotate(sumusage=Sum('usage'),sumtime=Sum('time'))
+    msg = "date,close" + "\n"
+    for d in data:
+        unit = (float(d.get('sumusage')))*(float(d.get('sumtime'))/3600)
+        msg += str(d.get('date').strftime("%H-%M-%S")) +","+ str(unit) +"\n"
+    return HttpResponse(msg, content_type='text/tsv')

@@ -36,6 +36,6 @@ class DeviceUsage(models.Model):
     device_id = models.ForeignKey(DeviceProfile)
     usage = models.FloatField(max_length=20)
     time = models.IntegerField(max_length=5)
-    date = models.DateField(auto_now=False)
+    date = models.DateTimeField(auto_now=False)
     def __str__(self):
          return str(self.device_id)
