@@ -209,7 +209,7 @@ def updateusage(request,id,num):
     usage_num = float(num)
 
     data = DeviceProfile.objects.get(device_id=id)
-    use = DeviceUsage.objects.create(device_id=data,usage=usage_num,time =3,date_time=now)
+    use = DeviceUsage.objects.create(device_id=data,usage=usage_num,time =3,date=now)
     use.save()
 
     # if data.openTime >= now <= data.closeTime:

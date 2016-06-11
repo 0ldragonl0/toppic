@@ -28,8 +28,9 @@ void setup() {
         delay(1000);
     }
 
-    WiFiMulti.addAP("Nun", "nunnun555");
+    //WiFiMulti.addAP("Nun", "nunnun555");
     //WiFiMulti.addAP("NETGEAR", "ECC22E550B");
+    WiFiMulti.addAP("true_home2G_792", "ilovestudy");
 
 
     pinMode(A0, INPUT);
@@ -58,7 +59,8 @@ void loop() {
         USE_SERIAL.println(u);
         USE_SERIAL.print("[HTTP] begin...\n");
 //        //http.begin("https://192.168.1.12/test.html", "7a 9c f4 db 40 d3 62 5a 6e 21 bc 5c cc 66 c8 3e a1 45 59 38"); //HTTPS
-       http.begin("http://172.20.10.2:8000/updateusage/4/"+u+"/"); //HTTP
+       //http.begin("http://172.20.10.2:8000/updateusage/4/"+u+"/"); //HTTP
+        http.begin("http://192.168.1.47:8000/updateusage/4/"+u+"/"); //HTTP
 
         int httpCode = http.GET();
 
