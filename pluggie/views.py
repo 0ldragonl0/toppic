@@ -185,10 +185,12 @@ def MonthGraph(request):
         if request.POST.get('month') is not None:
             month = request.POST.get('month')
             do = DeviceProfile.objects.get(device_id=id)
-            data = DeviceUsage.objects.filter(device_id=do,date__month=month).values('date').annotate(sumusage=Sum('usage'))
-            #print data # data[0].get('date').strftime("%d") get only date from year-month-date
+            data = DeviceUsage.objects.filter(device_id=do,date__month=month).values('date').annotate(sumusage=Sum('usage'),sumtime=Sum('time'))
+            print data # data[0].get('date').strftime("%d") get only date from year-month-date
             for d in data:
-                y[int(d.get('date').strftime("%d"))] = d.get('sumusage')
+                hr = float(d.get('sumtime'))/3600
+                kw = float(d.get('sumusage'))
+                y[int(d.get('date').strftime("%d"))] = kw * hr
             head = "usage of device name: "+ do.device_name +" at "+request.POST.get('month')+"th Month"
     else:
         print "Don't select data"
