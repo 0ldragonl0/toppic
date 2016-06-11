@@ -206,14 +206,11 @@ def updateusage(request,id,num):
     use = DeviceUsage.objects.create(device_id=data,usage=usage_num,time =3,date=now)
     use.save()
 
-    # if data.openTime >= now <= data.closeTime:
+    isTime = data.openTime >= now <= data.closeTime
     #     print 'update 1'
-    #     DeviceProfile.objects.filter(device_id=id).update(status=1)
-    # else:
-    #     print 'update 0'
-    #     DeviceProfile.objects.filter(device_id=id).update(status=0)
+    isSwitch = data.status_manual
 
-    num = int(data.status_manual)
+    num = int(isTime or isSwitch)
     if num == 0:
         msg = 'Off'
     elif num ==1:
@@ -226,23 +223,11 @@ def setonoff(request,id,num):
     data = DeviceProfile.objects.filter(device_id=id)
     num = int(num)
     if num == 0:
-        msg = 'Off'
         data.update(status_manual=0)
     elif num == 1:
-        msg = 'On'
         data.update(status_manual=1)
 
-
-    # data = DeviceProfile.objects.get(device_id=id)
-    # now =  timezone.make_aware(datetime.now(),timezone.get_default_timezone())
-    #
-    # if data.openTime >= now <= data.closeTime:
-    #     msg = '1'
-    #     DeviceProfile.objects.get(device_id=id).update(status=1)
-    # else:
-    #     msg = '0'
-    #     DeviceProfile.objects.get(device_id=id).update(status=0)
-    return HttpResponse(msg)
+    return redirect('/')
 
 def realtimeData(request):
     now =  timezone.make_aware(datetime.now(),timezone.get_default_timezone())
