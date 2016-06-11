@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{STATIC_URL}}favicon.ico"/>
     <title>Pluggie | Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -11,23 +12,24 @@
 </head>
 <body>
   <center>
-    <img src="https://photos-3.dropbox.com/t/2/AAD9Q2ETLhOuIpoAxAllFAc0Fsk2JpXTuRR_XusjestpIw/12/11259496/png/32x32/1/_/1/2/icon_pluggie.png/EN35sQgYywkgASgB/2Jqo5bs2ThaJNDiQJMAeAOMf5ZPmrQc1Aba8X1ZLUoE?size=1280x960&size_mode=3" alt="Icon User">
-  <br><br>
+    {% load staticfiles %}
+        <img src="{% static "images/icon_pluggie.png" %}" alt="Icon Pluggie">
+    <br><br>
   <div class="well center block" style="max-width:400px">
 {{msg}}
 <form method="post" action="{% url 'signin' %}">
-{% csrf_token %}
-   <b>ชื่อผู้ใช้</b> :
-    <input type="text" class="form-control"  name="username">
-    <br>
-    <b>รหัสผ่าน</b> :
-    <input type="password" class="form-control" name="password">
-    <br><br>
-  	<input type="submit" class="btn btn-primary" name="login" value="เข้าสู่ระบบ">
-    <br> - หรือ - <br>
-    <input type="submit" class="btn btn-default" name="register" value="สมัครสมาชิก">
-
-
+        {% block content %}
+          {% csrf_token %}
+       <b>ชื่อผู้ใช้</b> :
+        <input type="text" class="form-control"  name="username">
+        <br>
+        <b>รหัสผ่าน</b> :
+        <input type="password" class="form-control" name="password">
+        <br><br>
+      	<input type="submit" class="btn btn-primary btn-lg" name="login" value="เข้าสู่ระบบ">
+        <br> - หรือ - <br>
+        <input type="submit" class="btn btn-default" name="register" value="สมัครสมาชิก">
+        {% endblock %}
     </div>
   </form>
 </div>

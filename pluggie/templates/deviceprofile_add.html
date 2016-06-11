@@ -3,10 +3,9 @@
 <head>
   <title>Pluggie : Device's Profile</title>
   <meta charset="utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="{{STATIC_URL}}favicon.ico"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  {% load staticfiles %}
-  <script src="{% static 'angular.min.js' %}"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
@@ -34,10 +33,12 @@
   <br>
   <div class="well center block" style="max-width:400px">
   <form aciton="." name="deviceprofile" method="post" >
+        {% block content %}
     {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" class="btn btn-default" name="canceladddevice" value="ยกเลิก" />
         <input type="submit" class="btn btn-primary" name="adddevice" value="เพิ่มข้อมูลอุปกรณ์" />
+         {% endblock %}
     </form>
 </div>
 </div>

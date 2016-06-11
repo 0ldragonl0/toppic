@@ -9,14 +9,11 @@ class UserForm(forms.ModelForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),label='ชื่อจริง ')
     last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),label='นามสกุล ')
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}),label='อีเมล์ ')
+    
 
     class Meta:
         model = User
         fields = ['username', 'password', 'email','first_name','last_name']
         help_texts = {
-            'username': str('Required. 30 characters or fewer. Usernames may contain alphanumeric, _, @, +, . and - characters.<br><br>'),
-            'password': str('<br>'),
-            'email': str('<br>'),
-            'first_name': str('<br>'),
-            'last_name' : str('<br>'),
+            'username': str('Required. 30 characters or fewer. Usernames may contain alphanumeric, _, @, +, . and - characters.<br><br>')
         }

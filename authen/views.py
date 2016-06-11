@@ -11,7 +11,7 @@ from django.template import RequestContext
 import datetime
 from django.utils import formats
 from pluggie.models import DeviceProfile , UserProfile
-
+import pytz
 
 # Create your views here.
 def signin(request):
@@ -35,18 +35,23 @@ def signin(request):
         return render(request,'signin.html',{'msg': msg})
     elif request.POST.get('register'):
         form = UserForm()
-        return render(request, 'adduser.html', {'form': form})
+        return render(request, 'adduser.html', {'form': form,'timezones':pytz.common_timezones})
     elif request.POST.get('save'):
         form = UserForm(request.POST)
         if form.is_valid():
+            print "yooooooooooo"
             new_user = User.objects.create_user(**form.cleaned_data)
             new_user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request,new_user)
             print new_user.username
-            user_pro = UserProfile.objects.create(user = new_user)
+            time = request.POST['timezone']
+            user_pro = UserProfile.objects.create(user = new_user,user_timezone=time)
             user_pro.save()
             # redirect, or however you want to get to the main view
             msg ="สมัครสมาชิกเรียบร้อยแล้ว."
+            return  render(request, 'signin.html',{'msg': msg})
+        else:
+            msg ="มีชื่อผู้ใช้นี้อยู่ในระบบแล้ว โปรดสมัครสมาชิกใหม่."
             return  render(request, 'signin.html',{'msg': msg})
     elif request.POST.get('cancel'):
         msg = "โปรดเข้าสู่ระบบ."
@@ -79,20 +84,3 @@ def home(request):
 from django.http import HttpResponse
 def index(request):
     return HttpResponse("Hello World!")
-
-# def lexusadduser(request):
-#     if request.POST.get('save'):
-#         form = UserForm(request.POST)
-#         if form.is_valid():
-#             new_user = User.objects.create_user(**form.cleaned_data)
-#             new_user.backend = 'django.contrib.auth.backends.ModelBackend'
-#             login(request,new_user)
-#             # redirect, or however you want to get to the main view
-#             msg ="Registered."
-#             return  render(request, 'signin.html',{'msg': msg})
-#     elif request.POST.get('cancel'):
-#         msg = "Please sign-in."
-#         return  render(request, 'signin.html')
-#     else:
-#         form = UserForm()
-#     return render(request, 'adduser.html', {'form': form})

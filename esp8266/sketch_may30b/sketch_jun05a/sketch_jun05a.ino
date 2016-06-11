@@ -35,14 +35,12 @@ ESP.wdtDisable();  //ปิด watch dog Timer
 }
  
 void loop() 
-{    
+{
     while(client.available())   //ตรวจเช็ตว่ามี Data ส่งมาจาก Server หรือไม่
     {
             uint8_t  data =client.read();  //อ่าน Data จาก Buffer
             Serial.write(data); //แสดงผล Data ทาง Serial
     }
-               float out = analogRead(A0);
-               String n = "/9/"+String(out);
-               client.println(n);     //ส่งค่าที่ได้รับกลับไปยัง Server
-               delay(100);
+               client.println("Hello");     //ส่งค่าที่ได้รับกลับไปยัง Server
+               delay(1000);
 }

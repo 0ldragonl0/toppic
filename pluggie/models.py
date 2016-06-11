@@ -10,6 +10,9 @@ def number():
             return 1
         else:
             return no['ID__max'] + 1
+
+
+
 class UserProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     user_timezone = models.CharField(max_length=20,help_text="Please use the following format: UTC.")
@@ -17,18 +20,22 @@ class UserProfile(models.Model):
         return str(self.user)
 
 class DeviceProfile(models.Model):
-    owner = models.CharField(max_length=30)
+    owner = models.ForeignKey(User)
+    device_id = models.CharField(max_length=20,primary_key=True, unique=True)
     device_name = models.CharField(max_length=30)
+    status_timer = models.CharField(max_length=5,default='0')
+    status_manual = models.CharField(max_length=5,default='0')
     total_usage = models.FloatField(max_length=20,default='0')
-    openTime = models.TimeField('time to open device')
+    openTime = models.DateTimeField('time to open device')
     #openTime = models.DateTimeField('time to open device',auto_now_add=True) <- timestamp
-    closeTime = models.TimeField('time to close device')
+    closeTime = models.DateTimeField('time to close device')
     def __str__(self):
-        return self.device_name
+        return self.device_id
 
 class DeviceUsage(models.Model):
-    device_id = models.BigIntegerField(max_length=10)
+    device_id = models.ForeignKey(DeviceProfile)
     usage = models.FloatField(max_length=20)
-    date_time = models.DateTimeField()
+    time = models.IntegerField(max_length=5)
+    date = models.DateField(auto_now=False)
     def __str__(self):
-        return str(self.device_id)
+         return str(self.device_id)

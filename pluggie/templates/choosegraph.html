@@ -3,6 +3,7 @@
 <head>
   <title>Pluggie : Smart Plug for monitoring power consumption</title>
   <meta charset="utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="{{STATIC_URL}}favicon.ico"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -30,12 +31,12 @@
   <h3>โปรดเลือกชนิดกราฟแสดงผลการใช้ไฟฟ้า</h3>
     <!--<p>This is Home Page na kub .</p>-->
 </div>
+{% load staticfiles %}
 
 <a href="/realtime_graph">
-    <img src="https://photos-3.dropbox.com/t/2/AAAOqOgqAY0p4ox45XwYWR4u_k3z7vXo_XE7EztmH3s4Gw/12/11259496/png/32x32/1/_/1/2/icon_Graph_real.png/EN35sQgYzgkgASgB/b4SVCEywZuOnCHrWDbYsyjcvXXqIoTnI70jgVtzLzag?size=1600x1200&size_mode=3" alt="Icon User">
-</a>
+<img src="{% static "images/icon_Graph_real.png" %}" alt="Icon Graph Real-Time"></a>
 <a href="/month_graph">
-    <img src="https://photos-6.dropbox.com/t/2/AAAH4ZRvoGb-RNjkIVJAkAiLIodm6ZX_bYdk7i46CB8lGQ/12/11259496/png/32x32/1/_/1/2/icon_Graph_month.png/EN35sQgYzQkgASgB/U7y48SATUcZeZPvZQohCGFHEoagLpaNLwiVMK2I5gkc?size=1600x1200&size_mode=3" alt="Icon User">
+  <img src="{% static "images/icon_Graph_month.png" %}" alt="Icon Graph Month"></a>
 </a>
 </body>
 </html>

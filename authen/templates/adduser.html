@@ -3,6 +3,7 @@
 <head>
   <title>Pluggie : Smart Plug </title>
   <meta charset="utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="{{STATIC_URL}}favicon.ico"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -29,6 +30,16 @@
       <form method="post" action="">
           {% csrf_token %}
           {{ form }}
+          <br>
+          {% load tz %}
+          {% get_current_timezone as TIME_ZONE %}
+              {% csrf_token %}
+              <label for="timezone">Time zone:</label>
+              <select name="timezone">
+                  {% for tz in timezones %}
+                  <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected="selected"{% endif %}>{{ tz }}</option>
+                  {% endfor %}
+              </select>
           <br>
           <input type="submit" class="btn btn-default" name="cancel" value="ยกเลิก" />
           <input type="submit" class="btn btn-primary" name="save" value="ยืนยัน" />

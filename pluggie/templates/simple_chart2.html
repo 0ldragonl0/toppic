@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <title>Pluggie : Device's Profile</title>
+      <meta charset="utf-8">
+      <link rel="shortcut icon" type="image/x-icon" href="{{STATIC_URL}}favicon.ico"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+      <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.11.0.min.js"></script>
+      <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.11.0.min.css">
+      {{the_script|safe}}
+    </head>
+    <body>
+
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Pluggie</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li><a href="/home">หน้าหลัก</a></li>
+            <li><a href="/userprofile">ข้อมูลผู้ใช้</a></li>
+            <li><a href="/deviceprofile">ข้อมูลอุปกรณ์</a></li>
+            <li class="active"><a href="/graph">กราฟแสดงผล</a></li>
+          </ul>
+          <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}
+            <button type="button" class="btn btn-default btn-xs"><a href="/authen/" style="color: #000000">ออกจากระบบ</a></button>
+            <br>เวลาปัจจุบัน : {{date}}</p>  </div>
+    </nav>
+
+    <div class="container">
+      <h3>กราฟแสดงปริมาณการใช้ไฟฟ้าแบบทันที</h3>
+      <!--<p>This is Device Profile Page na kub .</p>-->
+    <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    อุปกรณ์
+    <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      {% for device in devices %}
+        <li><a href="/realtime_graph/{{device.device_id}}/">{{device.device_name}}</a></li>
+      {% endfor %}
+
+
+    </ul>
+    </div>
+      {{the_div|safe}}
+    </div>
+        </form>
+      </ul>
+      </div>
+    </body>
+    </html>

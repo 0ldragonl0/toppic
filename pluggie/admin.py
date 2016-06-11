@@ -9,9 +9,9 @@ class UserProfileAdmin(admin.ModelAdmin):
 admin.site.register(UserProfile, UserProfileAdmin)
 
 class DeviceProfileAdmin(admin.ModelAdmin):
-    list_display = ('id','owner','device_name','total_usage','openTime','closeTime')
+    list_display = ('owner','device_name','device_id','status_timer','status_manual','total_usage','openTime','closeTime')
 admin.site.register(DeviceProfile, DeviceProfileAdmin)
 
 class DeviceUsageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'device_id','usage','date_time')
+    list_display = ('device_id','usage','time','date')
 admin.site.register(DeviceUsage, DeviceUsageAdmin)
