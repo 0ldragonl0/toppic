@@ -9,29 +9,26 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
       <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.11.0.min.js"></script>
-      <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.11.0.min.css">
-      {{the_script|safe}}
-    </head>
-    <style> /* set the CSS */
+</head>
+<style> /* set the CSS */
 
-    body { font: 12px Arial;}
+body { font: 12px Arial;}
 
-    path {
-        stroke: steelblue;
-        stroke-width: 2;
-        fill: none;
-    }
+path {
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
 
-    .axis path,
-    .axis line {
-        fill: none;
-        stroke: grey;
-        stroke-width: 1;
-        shape-rendering: crispEdges;
-    }
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
 
-    </style>
-
+</style>
     <body>
 
       <nav class="navbar navbar-default">
@@ -46,12 +43,13 @@
             <li class="active"><a href="/graph">กราฟแสดงผล</a></li>
           </ul>
           <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}
-            <button type="button" class="btn btn-default btn-xs"><a href="/authen/" style="color: #000000">ออกจากระบบ</a></button>
+            <button type="button" class="btn btn-default btn-xs"><a href="/authen/signout/" style="color: #000000">ออกจากระบบ</a></button>
             <br>เวลาปัจจุบัน : {{date}}</p>  </div>
     </nav>
 
     <div class="container">
-      <h3>กราฟแสดงปริมาณการใช้ไฟฟ้าภายในหนึ่งเดือน</h3>
+      <h3>กราฟแสดงปริมาณการใช้ไฟฟ้าแบบทันที</h3>
+
       <!--<p>This is Device Profile Page na kub .</p>-->
 
         <form action="." method="post">
@@ -64,18 +62,19 @@
           </select>
           <input type="submit" value="แสดงผล">
         </form>
+        <h4>หน่วยเป็น kw</h4>
         <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
 
 // Set the dimensions of the canvas / graph
 var margin = {top: 20, right: 20, bottom: 30, left: 70},
-    width = 400 - margin.left - margin.right,
+    width = 800 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
 // Parse the date / time
 
-var parseDate = d3.time.format("%H-%M-%S").parse;
+var parseDate = d3.time.format("%H-%M-%S");
 
 // Set the ranges
 var x = d3.time.scale().range([0, width]);
@@ -104,8 +103,9 @@ var svg = d3.select("body")
 
 // Get the data
 d3.tsv("{% url 'realtimeData' %}", function(error, data) {
+    console.log(data);
     data.forEach(function(d) {
-        d.date = parseDate(d.date);
+        d.date = parseDate.parse(d.date);
         d.close = +d.close;
     });
 
@@ -138,10 +138,10 @@ function updateData() {
 
     // Get the data again
     d3.tsv("{% url 'realtimeData' %}", function(error, data) {
-        data.forEach(function(d) {
-            d.date = parseDate(d.date);
-            d.close = +d.close;
-        });
+      data.forEach(function(d) {
+          d.date = parseDate.parse(d.date);
+          d.close = +d.close;
+      });
 
     	// Scale the range of the data again
     	x.domain(d3.extent(data, function(d) { return d.date; }));

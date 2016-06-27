@@ -1,7 +1,7 @@
 /**
- * BasicHTTPClient.ino
- *
- *  Created on: 24.05.2015
+ * PLUGGIE
+ * AT DORM
+ *  value = true
  *
  */
 
@@ -48,12 +48,14 @@ void loop() {
         for(int i=0;i<500;i++){
           if(mymax < out){
             mymax = out;
+            USE_SERIAL.println(out);
           }
         }
-        // cureent = (mymax-524) x 0.05
+        
+        // cureent = (mymax-714) x 0.05
         // power = current x voltage(220)
-        //  power = (mymax-524) x 0.05 x 220
-        float power = (mymax-524) * 11; // power หน่วยเป็น w
+        //  power = (mymax-714) x 0.05 x 220
+        float power = (mymax-730) * 11; // power หน่วยเป็น w
         power = power / 1000; // power หน่วยเป็น kW
         String u = String(power);
         USE_SERIAL.println(u);

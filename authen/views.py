@@ -60,7 +60,7 @@ def signin(request):
 
 
 def signout(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
         print "signout"
         if 'user_username' in request.session:
             del request.session['user_username']

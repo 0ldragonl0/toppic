@@ -25,6 +25,7 @@ class DeviceProfile(models.Model):
     device_name = models.CharField(max_length=30)
     status_timer = models.CharField(max_length=5,default='0')
     status_manual = models.CharField(max_length=5,default='0')
+    status_true = models.CharField(max_length=5,default='Off')
     total_usage = models.FloatField(max_length=20,default='0')
     openTime = models.DateTimeField('time to open device')
     #openTime = models.DateTimeField('time to open device',auto_now_add=True) <- timestamp

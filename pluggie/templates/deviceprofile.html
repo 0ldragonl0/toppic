@@ -23,7 +23,7 @@
         <li><a href="/graph">กราฟแสดงผล</a></li>
       </ul>
       <p align="right">สวัสดี , {{user.first_name}} {{user.last_name}}
-        <button type="button" class="btn btn-default btn-xs"><a href="/authen/" style="color: #000000">ออกจากระบบ</a></button>
+        <button type="button" class="btn btn-default btn-xs"><a href="/authen/signout/" style="color: #000000">ออกจากระบบ</a></button>
         <br>เวลาปัจจุบัน : {{date}}</p>  </div>
 </nav>
 
@@ -41,15 +41,14 @@
 <div class="well center block" style="min-width:400px">
   {% for device in devices %}
     <pre><li>
-      <button type="button" class="btn btn-default"><a href="/setonoff/{{device.device_id}}/1" style="color: #000000"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> เปิดอุปกรณ์</a></button>      <button type="button" class="btn btn-default"><a href="/setonoff/{{device.device_id}}/0" style="color: #000000"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> ปิดอุปกรณ์</a></button>
-      <strong>สถานะการทำงาน:</strong> {{device.status_manual}}
+      <strong>สถานะการทำงาน:</strong> {{device.status_true}}
       <strong>รหัสประจำตัวอุปกรณ์:</strong> {{device.device_id}}  <!--<strong>เจ้าของ:</strong> {{device.owner}}-->
       <strong>ชื่ออุปกรณ์:</strong> {{ device.device_name }}
       <strong>ปริมาณไฟฟ้าที่ใช้ทั้งหมด:</strong> {{device.total_usage}} Unit
       <strong>เวลาเปิด:</strong> {{device.openTime}}
       <strong>เวลเปิด:</strong> {{device.closeTime}}
 
-      <button type="button" class="btn btn-default"><a href="/editdevice/{{device.device_id}}" style="color: #000000"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> แก้ไขข้อมูล</a></button><button type="button" class="btn btn-default"><a href="/deletedevice/{{device.device_id}}" style="color: #000000"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> ลบข้อมูล</a></button>
+      <button type="button" class="btn btn-default"><a href="/setonoff/{{device.device_id}}/1" style="color: #000000"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> เปิดอุปกรณ์</a></button>  <button type="button" class="btn btn-default"><a href="/setonoff/{{device.device_id}}/0" style="color: #000000"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> ปิดอุปกรณ์</a></button>  <button type="button" class="btn btn-default"><a href="/editdevice/{{device.device_id}}" style="color: #000000"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> แก้ไขข้อมูล</a></button>  <button type="button" class="btn btn-default"><a href="/deletedevice/{{device.device_id}}" style="color: #000000"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> ลบข้อมูล</a></button>
     </li></pre>
   {% endfor %}
 </div>

@@ -1,7 +1,7 @@
 /**
- * BasicHTTPClient.ino
- *
- *  Created on: 24.05.2015
+ * PLUGGIE
+ * AT DORM
+ *  value = true
  *
  */
 
@@ -44,16 +44,19 @@ void loop() {
         float out = analogRead(A0);
 
         HTTPClient http;
-        float mymax=0.0;
-        for(int i=0;i<500;i++){
+        float mymax=0.0, mymin=0.0;
+        for(int i=0;i<200;i++){
           if(mymax < out){
             mymax = out;
           }
+          USE_SERIAL.println(out);
         }
-        // cureent = (mymax-524) x 0.05
-        // power = current x voltage(220)
-        //  power = (mymax-524) x 0.05 x 220
-        float power = (mymax-524) * 11; // power หน่วยเป็น w
+
+        // current = (mymax-middle) x 0.05
+        // cureent = (mymax-686) x 0.05
+        // power = current x voltage(226)
+        //  power = (mymax-686) x 0.05 x 226
+        float power = (mymax-637) * 11.3; // power หน่วยเป็น w
         power = power / 1000; // power หน่วยเป็น kW
         String u = String(power);
         USE_SERIAL.println(u);
